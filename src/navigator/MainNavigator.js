@@ -11,7 +11,7 @@ const Stack = createStackNavigator()
 const MainNavigator = () => {
     return(
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="EditNote">
+            <Stack.Navigator initialRouteName="NoteList">
                 <Stack.Screen name="NoteList" component={NoteListScreen}  options={{headerShown : false}} />
                 <Stack.Screen name="CreateNote" component={AddNoteScreen}  options={{headerShown : false}} />
                 <Stack.Screen name="EditNote" component={EditNoteScreen} options={{headerShown : false}} />
