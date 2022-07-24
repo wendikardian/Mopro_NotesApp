@@ -7,9 +7,20 @@ const NoteListScreen = (props) => {
   const {navigation} = props;
   const [data, setData] = useState([])
   useEffect(() => {
-    setData(realm.objects('Note'))
+    const notes = realm.objects('Note')
+    const notesByDate = notes.sorted('date', true)
+    setData(notesByDate)
   }, [])
 
+  const dateFormat = (date) => {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    const noteDate = new Date(date)
+    const dateOnly = noteDate.getDate()
+    const monthOnly = noteDate.getMonth()
+    const yearOnly = noteDate.getFullYear()
+
+    return months[monthOnly] + ` ` + dateOnly + ', ' + yearOnly
+  }
   return (
     <View style={styles.mainContainer}>
       <View style={styles.headerContainer}>
@@ -23,7 +34,7 @@ const NoteListScreen = (props) => {
                 <Text style={styles.noteText}>{item.note}</Text>
               </View>
               <Text style={styles.dateText}>
-                {item.date}
+                {dateFormat(item.date)}
               </Text>
             </TouchableOpacity>
           </View>
@@ -76,7 +87,10 @@ const styles = StyleSheet.create({
     maxHeight : 40,
     padding: 10
   }, noteText: {
-    alignItems: 'justify-content',
+    textAlign: 'justify',
+    color : 'black',
+  }, dateText : {
+    fontSize : 12
   }
 })
 
