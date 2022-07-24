@@ -7,9 +7,12 @@ const NoteListScreen = (props) => {
   const {navigation} = props;
   const [data, setData] = useState([])
   useEffect(() => {
-    const notes = realm.objects('Note')
-    const notesByDate = notes.sorted('date', true)
-    setData(notesByDate)
+    const noteListPage = navigation.addListener('focus', () => {
+      const notes = realm.objects('Note')
+      const notesByDate = notes.sorted('date', true)
+      setData(notesByDate)
+    })
+    return noteListPage;
   }, [])
 
   const dateFormat = (date) => {

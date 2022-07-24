@@ -6,7 +6,14 @@ import realm from '../../store/realm'
 const AddNoteScreen = (props) => {
     const {navigation} = props
     const [tempNote, setTempNote] = useState('')
-
+    const getCurrentDate = () => {
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        const noteDate = new Date()
+        const dateOnly = noteDate.getDate()
+        const monthOnly = noteDate.getMonth()
+        const yearOnly = noteDate.getFullYear()
+        return months[monthOnly] + ` ` + dateOnly + ', ' + yearOnly
+      }
     const saveNote = (newNote) => {
         const allData = realm.objects('Note')
         const dataLength = allData.length
@@ -22,9 +29,7 @@ const AddNoteScreen = (props) => {
                     date : new Date().toISOString()
                 })
             })
-            alert('Success save to your note :)')
-            const data = realm.objects('Note');
-            console.log(data)
+            navigation.navigate('NoteList')
         }else{
             alert('Please fill the note ')
         }
@@ -37,7 +42,7 @@ const AddNoteScreen = (props) => {
                 <Icon name="check" type="font-awesome-5" size={18} />
             </TouchableOpacity>
         </View>
-        <Text style={styles.date}>Date</Text>
+        <Text style={styles.date}>{getCurrentDate()}</Text>
         <TextInput multiline placeholder="Write here" style={styles.input} onChangeText={(text) => setTempNote(text)} />
     </View>
   )
